@@ -44,6 +44,10 @@ class AthirdpRPGCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
 
+	/** Sprint Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* SprintAction;
+
 public:
 	AthirdpRPGCharacter();
 	
@@ -55,6 +59,12 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+
+	//character begin sprinting
+	void Sprint();
+
+	//character stop sprinting
+	void StopSprinting();
 			
 
 protected:

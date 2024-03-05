@@ -84,6 +84,10 @@ void AthirdpRPGCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 		// Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AthirdpRPGCharacter::Move);
 
+		// Sprint
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Started, this, &AthirdpRPGCharacter::Sprint);
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &AthirdpRPGCharacter::StopSprinting);
+
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AthirdpRPGCharacter::Look);
 	}
@@ -127,4 +131,14 @@ void AthirdpRPGCharacter::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+void AthirdpRPGCharacter::Sprint() {
+	UE_LOG(LogTemp, Warning, TEXT("We are sprinting"));
+	GetCharacterMovement()->MaxWalkSpeed = 1500.f;
+}
+
+void AthirdpRPGCharacter::StopSprinting() {
+	UE_LOG(LogTemp, Warning, TEXT("We have stopped sprinting"));
+	GetCharacterMovement()->MaxWalkSpeed = 500.f;
 }
