@@ -48,6 +48,14 @@ class AthirdpRPGCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* SprintAction;
 
+	/** Sprint Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* HealAction;
+
+	/** Sprint Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* DamageAction;
+
 public:
 	AthirdpRPGCharacter();
 	
@@ -65,6 +73,22 @@ protected:
 
 	//character stop sprinting
 	void StopSprinting();
+
+	//start damage
+	void StartDamage();
+
+	//take damage amount
+	void TakeDamage(float _damageAmount);
+
+	//heal
+	void Heal(float _healAmount);
+
+	//start healing;
+	void StartHealing();
+
+	//amount of health of current player
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health");
+	float playerHealth;
 			
 
 protected:

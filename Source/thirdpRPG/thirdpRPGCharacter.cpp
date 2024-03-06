@@ -52,6 +52,8 @@ AthirdpRPGCharacter::AthirdpRPGCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+
+	playerHealth = 1.00f;
 }
 
 void AthirdpRPGCharacter::BeginPlay()
@@ -83,6 +85,10 @@ void AthirdpRPGCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 		// Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AthirdpRPGCharacter::Move);
+
+		//heal and damage
+		EnhancedInputComponent->BindAction(HealAction, ETriggerEvent::Triggered, this, &AthirdpRPGCharacter::StartHealing);
+		EnhancedInputComponent->BindAction(DamageAction, ETriggerEvent::Triggered, this, &AthirdpRPGCharacter::StartDamage);
 
 		// Sprint
 		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Started, this, &AthirdpRPGCharacter::Sprint);
@@ -141,4 +147,34 @@ void AthirdpRPGCharacter::Sprint() {
 void AthirdpRPGCharacter::StopSprinting() {
 	UE_LOG(LogTemp, Warning, TEXT("We have stopped sprinting"));
 	GetCharacterMovement()->MaxWalkSpeed = 500.f;
+}
+
+void AthirdpRPGCharacter::StartDamage()
+{
+	TakeDamage(0.02f);
+}
+
+void AthirdpRPGCharacter::TakeDamage(float _damageAmount)
+{
+	UE_LOG(LogTemp, Warning, TEXT("We are taking damage for %f points"), _damageAmount);
+	playerHealth -= _damageAmount;
+
+	if (playerHealth < 0.00f) {
+		playerHealth = 0.00f;
+	}
+}
+
+void AthirdpRPGCharacter::StartHealing()
+{
+	Heal(0.02f);
+}
+
+void AthirdpRPGCharacter::Heal(float _healAmount)
+{
+	UE_LOG(LogTemp, Warning, TEXT("We are healing for %f points"), _healAmount);
+	playerHealth += _healAmount;
+
+	if (playerHealth > 1.00f) {
+		playerHealth = 1.00f;
+	}
 }
